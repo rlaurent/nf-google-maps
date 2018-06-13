@@ -9,32 +9,49 @@ Author URI: https://rlaurent.com
 */
 
 /**
- * Vars
+ * Create the Ninja forms settings page.
  */
-define( 'NF_GOOGLE_MAPS_VERSION', '1.0.0' );
-define( 'NF_GOOGLE_MAPS_AUTHOR', 'Romain Laurent' );
-
-/**
- * Include the dependencies needed to instantiate the plugin.
- */
-foreach ( glob( plugin_dir_path( __FILE__ ) . 'admin/*.php' ) as $file ) {
-    include_once $file;
+function nf_google_maps_settings( $settings )
+{
+    $settings[ 'nf-google-maps' ] = array(
+        'google_maps_api_key' => array(
+            'id'    => 'google_maps_api_key',
+            'type'  => 'textbox',
+            'label'  => __( 'Google Maps API Key', 'nf-google-maps' ),
+            'desc'  => __( 'Enter your Google Maps API Key. Make sure to enable Places API.', 'nf-google-maps' ),
+        ),
+    );
+    return $settings;
 }
+add_filter( 'ninja_forms_plugin_settings', 'nf_google_maps_settings', 10, 1 );
 
-/**
- * Create the admin page.
- */
-function nf_google_maps_custom_admin_settings() {
-    $plugin = new NF_Google_Maps_Submenu( new NF_Google_Maps_Submenu_Page() );
-    $plugin->init();
+function nf_google_maps_settings_groups( $groups )
+{
+    $groups[ 'nf-google-maps' ] = array(
+        'id' => 'nf-google-maps',
+        'label' => __( 'Ninja Forms Google Maps Extension', 'nf-google-maps' ),
+    );
+    return $groups;
 }
-add_action( 'plugins_loaded', 'nf_google_maps_custom_admin_settings' );
+add_filter( 'ninja_forms_plugin_settings_groups', 'nf_google_maps_settings_groups', 10, 1 );
+
+function save_google_maps_api_key( $setting_value )
+{
+    if( strpos( $setting_value, '_' ) ){
+        $parts = explode( '_', $setting_value );
+        foreach( $parts as $key => $value ){
+            Ninja_Forms()->update_setting( 'nfgm_' . $key, $value );
+        }
+    }
+}
+add_action( 'ninja_forms_save_setting_google_maps_api_key',  'save_google_maps_api_key', 10, 1 );
 
 /**
  * Add Google Maps API Places with Key
  */
 function nf_google_maps_scripts() {
-    wp_enqueue_script( 'google_maps_js', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCd4goTP3cAVKbIgn4OOUqz7ucDmekfwKI&libraries=places', '', '' );
+    $google_maps_api_key = Ninja_Forms()->get_setting( 'google_maps_api_key' );
+    wp_enqueue_script( 'google_maps_js', 'https://maps.googleapis.com/maps/api/js?key='.$google_maps_api_key.'&libraries=places', '', '' );
 }
 add_action( 'wp_enqueue_scripts', 'nf_google_maps_scripts' );
 
