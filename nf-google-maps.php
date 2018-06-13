@@ -11,8 +11,7 @@ Author URI: https://rlaurent.com
 /**
  * Create the Ninja forms settings page.
  */
-function nf_google_maps_settings( $settings )
-{
+function nf_google_maps_settings( $settings ) {
     $settings[ 'nf-google-maps' ] = array(
         'google_maps_api_key' => array(
             'id'    => 'google_maps_api_key',
@@ -25,8 +24,7 @@ function nf_google_maps_settings( $settings )
 }
 add_filter( 'ninja_forms_plugin_settings', 'nf_google_maps_settings', 10, 1 );
 
-function nf_google_maps_settings_groups( $groups )
-{
+function nf_google_maps_settings_groups( $groups ) {
     $groups[ 'nf-google-maps' ] = array(
         'id' => 'nf-google-maps',
         'label' => __( 'Ninja Forms Google Maps Extension', 'nf-google-maps' ),
@@ -35,8 +33,7 @@ function nf_google_maps_settings_groups( $groups )
 }
 add_filter( 'ninja_forms_plugin_settings_groups', 'nf_google_maps_settings_groups', 10, 1 );
 
-function save_google_maps_api_key( $setting_value )
-{
+function save_google_maps_api_key( $setting_value ) {
     if( strpos( $setting_value, '_' ) ){
         $parts = explode( '_', $setting_value );
         foreach( $parts as $key => $value ){
@@ -51,10 +48,11 @@ add_action( 'ninja_forms_save_setting_google_maps_api_key',  'save_google_maps_a
  */
 function nf_google_maps_scripts() {
     $google_maps_api_key = Ninja_Forms()->get_setting( 'google_maps_api_key' );
-    wp_enqueue_script( 'google_maps_js', 'https://maps.googleapis.com/maps/api/js?key='.$google_maps_api_key.'&libraries=places', '', '' );
+    
+    wp_enqueue_script( 'google_maps_js', 'https://maps.googleapis.com/maps/api/js?key='.$google_maps_api_key.'&libraries=places', array(), '1.0.0', true );
+    wp_enqueue_script( 'nf_google_maps', plugin_dir_url( __FILE__ ) . '/js/nf-google-maps.js', array(), '1.0.0', true );
 }
 add_action( 'wp_enqueue_scripts', 'nf_google_maps_scripts' );
-
 
 /**
  * Register our template

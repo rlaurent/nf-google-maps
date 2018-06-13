@@ -18,7 +18,7 @@ This section describes how to install the plugin and get it working.
 1. Upload `ninja-forms-google-maps` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Enter your Google API Key in settings
-4. Make sure Place API is enable in your Google developer console
+4. Make sure Maps JavaScript API and Places API for Web are enabled in your Google Cloud Plateform
 
 == Changelog ==
 
