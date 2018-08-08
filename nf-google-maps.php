@@ -1,8 +1,8 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit;
 /*
-Plugin Name: Ninja Forms - Google Maps
+Plugin Name: Ninja Forms - Google Maps Autocomplete Field
 Plugin URI: https://rlaurent.com
-Description: Google Maps add-on for Ninja Forms.
+Description: Google Maps autocomplete add-on for Ninja Forms v3 and +.
 Version: 1.0.0
 Author: Romain Laurent
 Author URI: https://rlaurent.com
@@ -55,7 +55,7 @@ function nf_google_maps_scripts() {
 add_action( 'wp_enqueue_scripts', 'nf_google_maps_scripts' );
 
 /**
- * Register our template
+ * Register our templates
  */
 function nf_google_maps_template_file_path( $paths ){
     //look for our templates in the same directory as the plugin
@@ -95,4 +95,3 @@ class NF_Google_Maps extends NF_Fields_Textbox {
         $this->_nicename = __( 'Google Maps Address', 'ninja-forms' ); //Nice name for the field
     }
 }
-
