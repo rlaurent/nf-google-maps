@@ -7,7 +7,9 @@ Stable Tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-<a href="https://www.buymeacoffee.com/rlaurent" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+<a href="https://www.buymeacoffee.com/rlaurent" target="_blank">
+   <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" >
+</a>
 
 ## Description
 The Ninja Forms Google Maps Extension allows users to choose an address with Google Maps Place API.
